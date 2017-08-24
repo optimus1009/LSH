@@ -3,3 +3,10 @@
 python
 python-jieba
 bash
+	a):去噪 (webcontent-filter.sh)
+
+		brief: 原始文本的初步去噪（去特殊符号、英文字母、数字 ...），消除连续空格以及删除空白行
+		
+		INPUT: 待去噪文本 (.content)
+		
+		OUTPUT: 去噪后的文本 (.ori)
