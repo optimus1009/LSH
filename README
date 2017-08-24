@@ -1,1 +1,5 @@
 本项目为python语言实现的文本相似度检测工具
+1.依赖环境
+python
+python-jieba
+bash
