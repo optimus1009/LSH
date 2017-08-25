@@ -11,3 +11,5 @@ bash
 		
 		OUTPUT: 去噪后的文本 (.ori)
 		{Note: 需对待比较的两个文档分别运行一次, i.e. 两个文档的分词结果都应添加到特征词典中}
+		eg:
+		src/preprocess.py data/temp/doc1.ori data/stopwords.txt data/word.dict
