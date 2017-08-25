@@ -8,10 +8,8 @@ Created on Fri Jul 28 21:06:07 2017
 import re
 import sys
 
-    
 mode_digit_alpha = re.compile(r"[0-9a-zA-Z\_]+")
 digit_alpha_pattern = re.compile(r"[A-Za-z0-9\[\`\~\!\@\#\$\^\&\?\...\】\【\!\《\》\*\(\)\=\|\{\}\'\:\;\'\,\[\]\.\<\>\/\?\~\！\!\@\#\\\&\*\%]")
-
 emoji_pattern = re.compile(
     u"(\ud83d[\ude00-\ude4f])|"  # emoticons
     u"(\ud83c[\udf00-\uffff])|"  
@@ -24,13 +22,14 @@ if __name__ == '__main__':
         print 'Usage: need two arguments doc_1.data doc_1_clear.data'
         exit(-1)
     input_data,output_data = sys.argv[1:]
-    without_digit_alpht = open(output_data,'w')
+    clear_text = []
     with open(input_data,'r') as f:
         for line in f.readlines():
-            raw_text = unicode(line,'utf-8')
+            raw_text = line.strip().encode('utf8')
             #raw_text = line.split('\t')[3]
             r_1 = digit_alpha_pattern.sub(r"", raw_text)
             r = emoji_pattern.sub(r'',r_1)
-            without_digit_alpht.write(r.encode('utf-8') +'\n')
-    without_digit_alpht.close()
+            clear_text.append(r.encode('utf8') + os.linesep)
+    with open(output_data,'w') as output:
+        output.writelines(clear_text)
 
