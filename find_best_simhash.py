@@ -24,8 +24,10 @@ if __name__ == "__main__":
         exit(-1)
     doc_1_noise,doc_path_1, doc_path_2, stopword_path, word_dict, mode, threshold = sys.argv[1:]
     print 'Arguments get success:', sys.argv[1:]
+    #原始query文档
     with open(doc_1_noise) as noise_file:
         doc_noise_file = noise_file.read().decode('utf8')
+    #去噪后的query文档
     with open(doc_path_1) as ins:
         doc_data_1 = ins.read().decode('utf8')
     print 'Loaded', doc_path_1
@@ -35,16 +37,15 @@ if __name__ == "__main__":
     # 分词 tokens返回分词后的数组
     doc_token_1 = jt.tokens(doc_data_1)    
     print 'Loading word dict...'
-    # 加载字典
+    # 加载字典并构建词典
     word_list = []
     with open(word_dict, 'r') as ins:
         for line in ins.readlines():
             word_list.append(line.split()[1])
-    # Build unicode string word dict
     word_dict = {}
     for idx, ascword in enumerate(word_list):
         word_dict[ascword.decode('utf8')] = idx
-    # Build nonzero-feature
+    # 构建非0特征向量
     fb = FeatureBuilder(word_dict)
     doc_feat_1 = fb.compute(doc_token_1) # return feature_nonzero得到一个非0 长度的向量 ，元素为(idx,value)且 value > 0
     #使得字典中的每个值都有一个hash值，
@@ -65,6 +66,7 @@ if __name__ == "__main__":
     fp_comment_dict = dict(fp_comment_tup)
     if mode == '-s':
         print 'Matching by Simhash + hamming distance'
+#----------------------------------------------------------------------
         tmp_dic = {}
         start_millis = int(round(time.time()*1000))
         for fp in fp_arr:
@@ -72,10 +74,11 @@ if __name__ == "__main__":
             tmp_dic[fp] = dist
         end_millis = int(round(time.time()*1000))
         print end_millis - start_millis
+#------------------------------------------------------------------------
         dict_sorted= sorted(tmp_dic.items(), key=lambda d:d[1])
         concat = 0 
         for fp_dist_tup in dict_sorted:
-            if concat <= 100:
+            if concat <= 99:
                 bin_doc_1 = list(bin(doc_fl_1.fingerprint))
                 print len(bin_doc_1),
                 bin_doc_2 = list(bin(fp_dist_tup[0]))
