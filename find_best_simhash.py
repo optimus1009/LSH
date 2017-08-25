@@ -58,14 +58,14 @@ if __name__ == "__main__":
     #fp_set = set()
     fp_arr = []
     fp_post_id_dict = {}
-    with open('/home/lin.xiong/text-similarity/data/clear_test.fingerprint','r') as fp:
+    with open('/home/lin.xiong/text-similarity/data/python_clear.fingerprint','r') as fp:
         for line in fp:
             fp_post_id_dict[long(line.split('\t')[1])] = line.split('\t')[0]
             fp_arr.append(long(line.split('\t')[1]))
     comment = []
-    with open('/home/lin.xiong/text-similarity/data/test.data','r') as comment_file:
+    with open('/home/lin.xiong/text-similarity/data/lsh.data','r') as comment_file:
         for line in comment_file:
-            comment.append(line)
+            comment.append(line.strip().split('$&&$')[1])
     fp_comment_tup = zip(fp_arr,comment)
     fp_comment_dict = dict(fp_comment_tup)
     if mode == '-s':
