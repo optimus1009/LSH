@@ -15,7 +15,7 @@ class FeatureBuilder:
         #长度为word_dic的全0向量
         feature = [0]*len(self.word_dict) #word_dict--> (word:index)
         for token in token_list:
-            feature[self.word_dict[token]] += 1
+            feature[self.word_dict[token]] += 1  #[0,0,0,0,1,4,5,3,0,0,0,0,0]
         #将特征长度（等于字典长度）转化为非0字典长度，过滤0值
         feature_nonzero = [(idx,value) for idx, value in enumerate(feature) if value > 0]
         return feature_nonzero
@@ -43,6 +43,7 @@ def feature_single(inputfile, outputfile):
             for idx,f in feature:
                 if f > 1e-6:
                     l.append('%s:%s' %(idx,f))
+                    #因为writelines不会在每一行末尾加入换行符，所以要自己加入一个换行符
             result_lines.append(' '.join(l) + os.linesep)
             print 'Finished\r', lineidx,
     with open(outputfile, 'w') as outs:
@@ -50,18 +51,15 @@ def feature_single(inputfile, outputfile):
     print 'Wrote to ', outputfile
 
 if __name__=="__main__":
-    if len(sys.argv) < 5:
-        print "Usage:\tfeature.py -s/-m <word_dict_path> <tokens_file/tokens_folder> <feature_file/feature_folder>"
+    if len(sys.argv) < 4:
+        print "Usage:\tfeature.py <word_dict_path> <tokens_file/tokens_folder> <feature_file/feature_folder>"
         exit(-1)
     word_dict = {}
-    with open(sys.argv[2], 'r') as ins:
+    with open(sys.argv[1], 'r') as ins:
         for line in ins.readlines():
             l = line.split()
-            word_dict[l[1].decode('utf8')] = int(l[0])  #建立 word:tf 的字典
+            word_dict[l[1].decode('utf8')] = int(l[0])  #建立 word:index 的字典
     fb = FeatureBuilder(word_dict)
     print 'Loaded', len(word_dict), 'words'
-    if sys.argv[1] == '-s':
-        feature_single(sys.argv[3], sys.argv[4])
-    elif sys.argv[1] == '-m':
-        for inputfile in os.listdir(sys.argv[3]):
-            feature_single(os.path.join(sys.argv[3],inputfile), os.path.join(sys.argv[4],inputfile.replace('.token','.feat')))
+    feature_single(sys.argv[2], sys.argv[3])
+
