@@ -51,14 +51,14 @@ if __name__ == "__main__":
     smb = SimhashBuilder(word_list)
     doc_fl_1 = DocFeatLoader(smb, doc_feat_1)
     #测试文件,用于调研算法
-    out_file = open('out.file','w')
+    out_file = open('/home/lin.xiong/text-similarity/data/out.file','w')
     #fp_set = set()
     fp_arr = []
-    with open('./clear_test.fingerprint','r') as fp:
+    with open('/home/lin.xiong/text-similarity/data/clear_test.fingerprint','r') as fp:
         for line in fp:
             fp_arr.append(long(line))
     comment = []
-    with open('./test.data','r') as comment_file:
+    with open('/home/lin.xiong/text-similarity/data/test.data','r') as comment_file:
         for line in comment_file:
             comment.append(line)
     fp_comment_tup = zip(fp_arr,comment)
