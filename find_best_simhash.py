@@ -23,7 +23,7 @@ if __name__ == "__main__":
                                                                                     '../text-similarity/data/doc_1.clear',\
                                                                                     '../text-similarity/data/doc_2.data',\
                                                                                     '../text-similarity/data/stopwords.txt',\
-                                                                                    '../text-similarity/data/word.dict',\
+                                                                                    '../text-similarity/data/python_word.dict',\
                                                                                     '-s',15)
     print 'Arguments get success:', sys.argv[1:]
     #原始query文档
