@@ -43,8 +43,10 @@ class WordDictBuilder:
         l = sorted(l, reverse=True)
         result_lines = []
         for idx, (value, key) in enumerate(l):
-            result_lines.append('%s\t%s\t%s%s' % (idx, key, value, os.linesep))
+            #os.linesep: 字符串给出当前平台使用的行终止符。例如，Windows使用'\r\n'，Linux使用'\n'而Mac使用'\r'
+            result_lines.append('%s\t%s\t%s%s' % (idx, key, value))
         with open(filepath, 'w') as outs:
+            #注意write和writelines 区别，writelines不会在每一行末尾加入换行符，参数为一个可迭代的字符串元素序列
             outs.writelines(result_lines)
 
 
@@ -53,6 +55,7 @@ if __name__ == "__main__":
         print "Usage:\tWordDictBuilder.py <input_folder/file> <output_file>"
         exit(-1)
     if not os.path.isfile(sys.argv[1]):
+        #os.sep 可以取代操作系统特定的路径分割符
         filelist = [sys.argv[1] + os.sep + f for f in os.listdir(sys.argv[1])]
     else:
         filelist = [sys.argv[1]]
