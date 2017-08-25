@@ -1,6 +1,5 @@
-#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 '''
-Created on 2013-11-14
 Created on Tue Aug 22 19:17:12 2017
 
 @author: lin

@@ -57,9 +57,11 @@ if __name__ == "__main__":
     out_file = open('/home/lin.xiong/text-similarity/data/out.file','w')
     #fp_set = set()
     fp_arr = []
+    fp_post_id_dict = {}
     with open('/home/lin.xiong/text-similarity/data/clear_test.fingerprint','r') as fp:
         for line in fp:
-            fp_arr.append(long(line))
+            fp_post_id_dict[long(line.split('\t')[1])] = line.split('\t')[0]
+            fp_arr.append(long(line.split('\t')[1]))
     comment = []
     with open('/home/lin.xiong/text-similarity/data/test.data','r') as comment_file:
         for line in comment_file:
@@ -94,13 +96,13 @@ if __name__ == "__main__":
                 prob = (128 - fp_dist_tup[1])/128
                 if fp_dist_tup[1] < float(threshold):
                     print 'query: ',doc_noise_file,
-                    print 'comment:',fp_comment_dict[fp_dist_tup[0]],
+                    print 'comment:',fp_post_id_dict[fp_dist_tup[0]],fp_comment_dict[fp_dist_tup[0]],
                     print('doc_1 simhash code: %(f1)s \ndoc_2 simhash code: %(f2)s ') % {'f1':bin(doc_fl_1.fingerprint),'f2':bin(fp_dist_tup[0])}
                     print 'Matching Result: True:%(dist)s , Similarity: %(sim)s\n' % {'dist':fp_dist_tup[1],'sim':prob}
                     out_file.write(doc_noise_file.strip().encode('utf-8') + '\t' + fp_comment_dict[fp_dist_tup[0]].strip() + '\t' + str(fp_dist_tup[1]) + '\t' + str(prob) + '\n')
                 else:
                     print 'query: ',doc_noise_file,
-                    print 'comment:',fp_comment_dict[fp_dist_tup[0]],
+                    print 'comment:',fp_post_id_dict[fp_dist_tup[0]],fp_comment_dict[fp_dist_tup[0]],
                     print('doc_1 simhash code: %(f1)s \ndoc_2 simhash code: %(f2)s') % {'f1':bin(doc_fl_1.fingerprint),'f2':bin(fp_dist_tup[0])}
                     print 'Matching Result: False:%(dist)s , Similarity: %(sim)s' % {'dist':fp_dist_tup[1],'sim':prob}
                     out_file.write(doc_noise_file.strip().encode('utf-8') + '\t' + fp_comment_dict[fp_dist_tup[0]].strip() + '\t' + str(fp_dist_tup[1]) + '\t' + str(prob) + '\n')
