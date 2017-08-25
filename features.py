@@ -32,19 +32,20 @@ class FeatureBuilderUpdate(FeatureBuilder):
     def _add_word(self, word):
         self.word_dict.add_one(word)
 
-
 def feature_single(inputfile, outputfile):
     print inputfile,outputfile
     result_lines = []
     with open(inputfile, 'r') as ins:
         for lineidx, line in enumerate(ins.readlines()):
+            post_id = line.split('\t')[0]
+            line = line.split('\t')[1]
             feature = fb.compute([token.decode('utf8') for token in line.strip().split()])
             l = []
             for idx,f in feature:
                 if f > 1e-6:
                     l.append('%s:%s' %(idx,f))
                     #因为writelines不会在每一行末尾加入换行符，所以要自己加入一个换行符
-            result_lines.append(' '.join(l) + os.linesep)
+            result_lines.append(post_id + '\t' + ' '.join(l) + os.linesep)
             print 'Finished\r', lineidx,
     with open(outputfile, 'w') as outs:
         outs.writelines(result_lines)

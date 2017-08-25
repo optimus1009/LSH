@@ -29,7 +29,7 @@ class WordDictBuilder:
     def _updateDict(self, filepath):
         with open(filepath, 'r') as ins:
             for line in ins.readlines():
-                for word in line.rstrip().split():
+                for word in line.split('\t')[1].rstrip().split():
                     self.word_dict[word] += 1
 
     def _updateDictByTokenList(self):

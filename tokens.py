@@ -32,9 +32,11 @@ def token_single_file(input_fname, output_fname):
     result_lines = []
     with open(input_fname) as ins:
         for line in ins:
-            line = line.strip().decode('utf8')
+            post_id = line.split('\t')[0]
+            text = line.split('\t')[1]
+            line = text.strip().decode('utf8')
             tokens = jt.tokens(line)
-            result_lines.append(u' '.join(tokens).encode('utf8'))
+            result_lines.append(post_id + '\t' + u' '.join(tokens).encode('utf8'))
     open(output_fname, 'w').write(os.linesep.join(result_lines))
     print 'Wrote to ', output_fname
 
