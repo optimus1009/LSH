@@ -156,19 +156,6 @@ class simhash():
         return a/b
 
 if __name__ == '__main__':
-    #看看哪些东西google最看重？标点？
-    #s = '看看哪些东西google最看重？标点？'
-    #hash1 =simhash(s.split())
-    #print("0x%x" % hash1)
-    #print ("%s\t0x%x" % (s, hash1))
-
-    #s = '看看哪些东西google最看重！标点！'
-    #hash2 = simhash(s.split())
-    #print ("%s\t[simhash = 0x%x]" % (s, hash2))
-
-    #print '%f%% percent similarity on hash' %(100*(hash1.similarity(hash2)))
-    #print hash1.hamming_distance(hash2),"bits differ out of", hash1.hashbits
-
     if len(sys.argv) < 4:
         print "Usage:\tsimhash_imp.py <word_dict_path> <feature_file> <finger_print_file>"
         exit(-1)
@@ -183,10 +170,12 @@ if __name__ == '__main__':
     with open(sys.argv[2], 'r') as ins:
         for idx, line in enumerate(ins.readlines()):
             print '\rprocessing doc', idx,
+            post_id = line.split('\t')[0]
+            line = line.split('\t')[1]
             feature_vec = line.strip().split()
             feature_vec = [(int(item.split(':')[0]),float(item.split(':')[1])) for item in feature_vec]
             fingerprint = sim_b.sim_hash_nonzero(feature_vec)
-            result_lines.append(str(fingerprint)+os.linesep)
+            result_lines.append(post_id + '\t' + str(fingerprint)+os.linesep)
     with open(sys.argv[3], 'w') as outs:
         outs.writelines(result_lines)
 
