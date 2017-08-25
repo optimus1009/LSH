@@ -4,7 +4,7 @@ Created on Fri Jul 28 21:06:07 2017
 
 @author: lin
 """
-
+import os
 import re
 import sys
 
@@ -26,7 +26,7 @@ if __name__ == '__main__':
     clear_text = []
     with open(input_data,'r') as f:
         for line in f.readlines():
-            raw_text = line.strip().encode('utf8')
+            raw_text = unicode(line.strip(),'utf8')
             #raw_text = line.split('\t')[3]
             r_1 = digit_alpha_pattern.sub(r"", raw_text)
             r = emoji_pattern.sub(r'',r_1)
