@@ -19,10 +19,12 @@ class DocFeatLoader:
         self.fingerprint = simhash_builder.sim_hash_nonzero(self.feat_vec)
         
 if __name__ == "__main__":
-    if len(sys.argv) < 8:
-        print "Usage:\tisSimilar.py <doc1_noise> <doc1> <doc2> <stopword_path> <word_dict> <-c/-s> <threshold>"
-        exit(-1)
-    doc_1_noise,doc_path_1, doc_path_2, stopword_path, word_dict, mode, threshold = sys.argv[1:]
+    doc_1_noise,doc_path_1, doc_path_2, stopword_path, word_dict, mode, threshold = ('../text-similarity/data/doc_1.data',\
+                                                                                    '../text-similarity/data/doc_1.clear',\
+                                                                                    '../text-similarity/data/doc_2.data',\
+                                                                                    '../text-similarity/data/stopwords.txt',\
+                                                                                    '../text-similarity/data/word.dict',\
+                                                                                    '-s',15)
     print 'Arguments get success:', sys.argv[1:]
     #原始query文档
     with open(doc_1_noise) as noise_file:
