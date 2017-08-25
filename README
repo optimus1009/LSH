@@ -10,3 +10,5 @@ bash
 		INPUT: 待去噪文本 (.content)
 		
 		OUTPUT: 去噪后的文本 (.ori)
+		eg:
+		src/preprocess.py data/temp/doc1.ori data/stopwords.txt data/word.dict
