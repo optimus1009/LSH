@@ -44,7 +44,7 @@ class WordDictBuilder:
         result_lines = []
         for idx, (value, key) in enumerate(l):
             #os.linesep: 字符串给出当前平台使用的行终止符。例如，Windows使用'\r\n'，Linux使用'\n'而Mac使用'\r'
-            result_lines.append('%s\t%s\t%s%s' % (idx, key, value))
+            result_lines.append('%s\t%s\t%s%s' % (idx, key, value, os.linesep))
         with open(filepath, 'w') as outs:
             #注意write和writelines 区别，writelines不会在每一行末尾加入换行符，参数为一个可迭代的字符串元素序列
             outs.writelines(result_lines)
