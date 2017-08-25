@@ -22,15 +22,17 @@ if __name__ == '__main__':
 #        print 'Usage: need two arguments doc_1.data doc_1_clear.data'
 #        exit(-1)
 #    input_data,output_data = sys.argv[1:]
-    input_data,output_data = ('/home/lin.xiong/text-similarity/data/test.data','/home/lin.xiong/text-similarity/data/python_clear.data')
+    input_data,output_data = ('/home/lin.xiong/text-similarity/data/lsh.data','/home/lin.xiong/text-similarity/data/python_clear.data')
     clear_text = []
     with open(input_data,'r') as f:
         for line in f.readlines():
-            raw_text = unicode(line.strip(),'utf8')
+            post_id = line.split('$&&$')[0]
+            raw_text = line.split('$&&$')[1]
+            clean_text = unicode(raw_text.strip().replace('\t','').replace('\n','').replace('\r',''),'utf8')
             #raw_text = line.split('\t')[3]
-            r_1 = digit_alpha_pattern.sub(r"", raw_text)
+            r_1 = digit_alpha_pattern.sub(r"", clean_text)
             r = emoji_pattern.sub(r'',r_1)
-            clear_text.append(r.encode('utf8') + os.linesep)
+            clear_text.append('%s\t%s%s' % (post_id,r.encode('utf8'),os.linesep))
     with open(output_data,'w') as output:
         output.writelines(clear_text)
 
