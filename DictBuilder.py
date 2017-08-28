@@ -3,6 +3,8 @@
 Created on Tue Aug 22 15:51:20 2017
 
 @author: lin
+根据分词结果文件或目录，生成以词频降序排列的特征词典
+词典格式如下：ID + 特征词 + 词频
 '''
 from collections import defaultdict
 import os
@@ -31,7 +33,7 @@ class WordDictBuilder:
             for line in ins.readlines():
                 for word in line.split('\t')[1].rstrip().split():
                     self.word_dict[word] += 1
-
+    # _updateDict主要用于构建一个词典，而_updateDictByTokenList用于添加额外自定义的token，
     def _updateDictByTokenList(self):
         for token in self.tokenlist:
             if isinstance(token, unicode):
