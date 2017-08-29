@@ -19,11 +19,11 @@ class DocFeatLoader:
         self.fingerprint = simhash_builder.sim_hash_nonzero(self.feat_vec)
         
 if __name__ == "__main__":
-    doc_1_noise,doc_path_1, doc_path_2, stopword_path, word_dict, mode, threshold = ('../text-similarity/data/doc_1.data',\
-                                                                                    '../text-similarity/data/doc_1.clear',\
-                                                                                    '../text-similarity/data/doc_2.data',\
-                                                                                    '../text-similarity/data/stopwords.txt',\
-                                                                                    '../text-similarity/data/python_word.dict',\
+    doc_1_noise,doc_path_1, doc_path_2, stopword_path, word_dict, mode, threshold = ('../lsh_data/doc_1.data',\
+                                                                                    '../lsh_data/doc_1.clear',\
+                                                                                    '../lsh_data/doc_2.data',\
+                                                                                    '../lsh_data/stopwords.txt',\
+                                                                                    '../lsh_data/word.dict',\
                                                                                     '-s',15)
     print 'Arguments get success:', sys.argv[1:]
     #原始query文档
@@ -54,16 +54,16 @@ if __name__ == "__main__":
     smb = SimhashBuilder(word_list)
     doc_fl_1 = DocFeatLoader(smb, doc_feat_1)
     #测试文件,用于调研算法
-    out_file = open('/home/lin.xiong/text-similarity/data/out.file','w')
+    out_file = open('/home/lin.xiong/lsh_data/out.file','w')
     #fp_set = set()
     fp_arr = []
     fp_post_id_dict = {}
-    with open('/home/lin.xiong/text-similarity/data/python_clear.fingerprint','r') as fp:
+    with open('/home/lin.xiong/lsh_data/lsh_clear.fingerprint','r') as fp:
         for line in fp:
             fp_post_id_dict[long(line.split('\t')[1])] = line.split('\t')[0]
             fp_arr.append(long(line.split('\t')[1]))
     comment = []
-    with open('/home/lin.xiong/text-similarity/data/lsh.data','r') as comment_file:
+    with open('/home/lin.xiong/lsh_data/lsh.data','r') as comment_file:
         for line in comment_file:
             comment.append(line.strip().split('$&&$')[1])
     fp_comment_tup = zip(fp_arr,comment)
