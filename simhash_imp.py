@@ -22,11 +22,7 @@ class SimhashBuilder:
         self.hashbits = hashbits
         self.hashval_list = [self._string_hash(word) for word in word_list]
         print 'Totally: %s words' %(len(self.hashval_list),)
-        """
-        with open('word_hash.txt', 'w') as outs:
-            for word in word_list:
-                outs.write(word+'\t'+str(self._string_hash(word))+os.linesep)
-        """
+
 
     def _string_hash(self, word):
         # A variable-length version of Python's builtin hash
