@@ -14,7 +14,7 @@ jt = JiebaTokenizer('../lsh_data/stopwords.txt', 'c')
 hash_table = store_hash_table('../lsh_data/hash_code_file')
 print 'build hash_table success '
 def hammingdist(bit_48_query_string,bit_48_hash_table_arr):
-    bit_48_query = bit_48_query_string.split('|')[1]
+    bit_48_query = bit_48_query_string[0].split('|')[1]
     post_id_dist_dic = {}
     for bit_48 in bit_48_hash_table_arr:
         post_id = bit_48.split('|')[0]
@@ -52,5 +52,5 @@ if __name__ == '__main__':
         start_time = int(round(time.time()*1000))
         sim_res = find_sim_doc(query_binary_hash)
         end_time = int(round(time.time()*1000))
-        cost_time = start_time - end_time
+        cost_time = end_time - start_time
         print 'const time: ',cost_time
