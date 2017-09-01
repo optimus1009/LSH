@@ -9,10 +9,10 @@ from tokens import *
 from store_hash_table import *
 from simhash_128bit import *
 
-jt = JiebaTokenizer('D:/stopword', 'c')
+jt = JiebaTokenizer('../lsh_data/stopwords.txt', 'c')
 
-hash_table = store_hash_table('D:/hash_code_file')
-
+hash_table = store_hash_table('../lsh_data/hash_code_file')
+print 'build hash_table success '
 def hammingdist(bit_48_query_string,bit_48_hash_table_arr):
     bit_48_query = bit_48_query_string.split('|')[1]
     post_id_dist_dic = {}
@@ -41,10 +41,15 @@ def find_sim_doc(query):
             continue
     return post_id_dist
 if __name__ == '__main__':
-    doc = ''
-    doc_token = jt.tokens(doc)
-    query_binary_hash = simhash(doc_token.strip())
-    start_time = int(round(time.time()*1000))
-    sim_res = find_sim_doc(query_binary_hash)
-    end_time = int(round(time.time()*1000))
-    print start_time - end_time
+    simhashcode = []
+    with open('../lsh_data/lsh_clear.token','r') as token:
+        for line in token:
+            post_id = line.split('\t')[0]
+            doc = line.split('\t')[1]
+            binary_hash = simhash(doc.strip())
+            simhashcode.append(post_id + '\t' + str(binary_hash))
+    for query_binary_hash in simhashcode:
+        start_time = int(round(time.time()*1000))
+        sim_res = find_sim_doc(query_binary_hash)
+        end_time = int(round(time.time()*1000))
+        print start_time - end_time
