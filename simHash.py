@@ -67,7 +67,7 @@ if __name__ == '__main__':
         end_time = int(round(time.time()*1000))
         cost_time = end_time - start_time
         for elem in sim_res:
-            arr.append(post_id_raw_data[elem[0]] +'\t' + str(elem[1]) + os.linesep)
+            arr.append(post_id_raw_data[elem[0]] + '\t' + str(elem[1]) + os.linesep)
         print 'const time: ',cost_time
     with open('../lsh_data/test_new_tech.data','w') as out:
         out.writelines(arr)
