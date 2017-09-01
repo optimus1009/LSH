@@ -10,7 +10,7 @@ from store_hash_table import *
 from simhash_128bit import *
 comment_post_id = []
 comment_raw_data = []
-with open('/home/lin.xiong/lsh_data/lsh.data','r') as comment_file:
+with open('/home/lin.xiong/lsh_data/lsh.data' , 'r') as comment_file:
         for line in comment_file:
             comment_post_id.append(line.strip().split('$&&$')[0])
             comment_raw_data.append(line.strip().split('$&&$')[1])
@@ -48,27 +48,27 @@ def find_sim_doc(query):
             post_id_dist.extend(arr)
         else:
             continue
-    return post_id_dist #返回的数据形态 [(post_id,dist),......................]且距离都小于15
+    return post_id_dist  #返回的数据形态 [(post_id,dist),......................]且距离都小于15
 if __name__ == '__main__':
 
-    simhashcode = []
+    simhash_code = []
     with open('../lsh_data/doc_2.data','r') as token:
         for line in token:
             post_id = line.split('\t')[0]
             doc = line.split('\t')[1]
             binary_hash = simhash(doc.strip())
-            simhashcode.append(post_id + '\t' + str(binary_hash))
-    #此处需要改造，变成单条数据
+            simhash_code.append(post_id + '\t' + str(binary_hash))
+    # 此处需要改造，变成单条数据
     arr = []
-    for query_binary_hash in simhashcode:
+    for query_binary_hash in simhash_code:
         print query_binary_hash
         start_time = int(round(time.time()*1000))
-        sim_res = find_sim_doc(query_binary_hash) # query_binary_hash: post_id      101010001010101010100010010101010101010100020101001010111100
+        sim_res = find_sim_doc(query_binary_hash)  # query_binary_hash: post_id      101010001010101010100010010101010101010100020101001010111100
         end_time = int(round(time.time()*1000))
         cost_time = end_time - start_time
         for elem in sim_res:
             arr.append(post_id_raw_data[elem[0]] + '\t' + str(elem[1]) + os.linesep)
-        print 'const time: ',cost_time
+        print 'const time: ', cost_time
     with open('../lsh_data/test_new_tech.data','w') as out:
         out.writelines(arr)
     print 'write res into file success..........'
