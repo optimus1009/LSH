@@ -19,7 +19,9 @@ post_id_raw_data = dict(tup)
 jt = JiebaTokenizer('../lsh_data/stopwords.txt', 'c')
 
 hash_table = store_hash_table('../lsh_data/hash_code_file')
-print 'build hash_table success ,and hash_table size is : ',len(hash_table)
+print 'build hash_table success ,and hash_table size is : ', len(hash_table)
+
+
 def hammingdist(bit_48_query_string,bit_48_hash_table_arr):
     bit_48_query = bit_48_query_string[0].split('|')[1]
     post_id_dist_dic = {}
