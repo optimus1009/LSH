@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Fri Sep 01 14:18:58 2017
-
 @author: lin
 """
 import os
@@ -20,7 +19,7 @@ post_id_raw_data = dict(tup)
 jt = JiebaTokenizer('../lsh_data/stopwords.txt', 'c')
 
 hash_table = store_hash_table('../lsh_data/hash_code_file')
-print 'build hash_table success '
+print 'build hash_table success ,and hash_table size is : ',len(hash_table)
 def hammingdist(bit_48_query_string,bit_48_hash_table_arr):
     bit_48_query = bit_48_query_string[0].split('|')[1]
     post_id_dist_dic = {}
@@ -34,7 +33,7 @@ def hammingdist(bit_48_query_string,bit_48_hash_table_arr):
         post_id_dist_dic[post_id] = cnt
     
     dict_sorted= sorted(post_id_dist_dic.items(), key=lambda d:d[1])
-    return [elem for elem in dict_sorted if elem[1] < 15]   #返回的数据形态 ：[(post_id,dist),]
+    return [elem for elem in dict_sorted if elem[1] < 3]   #返回的数据形态 ：[(post_id,dist),]
 
 def find_sim_doc(query):
     query_split_dic = parse_code(query)
@@ -60,12 +59,13 @@ if __name__ == '__main__':
     #此处需要改造，变成单条数据
     arr = []
     for query_binary_hash in simhashcode:
+        print query_binary_hash
         start_time = int(round(time.time()*1000))
         sim_res = find_sim_doc(query_binary_hash) # query_binary_hash: post_id      101010001010101010100010010101010101010100020101001010111100
         end_time = int(round(time.time()*1000))
         cost_time = end_time - start_time
         for elem in sim_res:
-            arr.append(post_id_raw_data(elem[0]) +'\t' + str(elem[1]) + os.linesep)
+            arr.append(post_id_raw_data[elem[0]] +'\t' + str(elem[1]) + os.linesep)
         print 'const time: ',cost_time
     with open('../lsh_data/test_new_tech.data','w') as out:
         out.writelines(arr)
