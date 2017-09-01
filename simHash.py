@@ -52,4 +52,5 @@ if __name__ == '__main__':
         start_time = int(round(time.time()*1000))
         sim_res = find_sim_doc(query_binary_hash)
         end_time = int(round(time.time()*1000))
-        print start_time - end_time
+        cost_time = start_time - end_time
+        print 'const time: ',cost_time
