@@ -14,7 +14,7 @@ from simhash_128bit import *
 comment_post_id = []
 comment_raw_data = []
 
-with open('/home/lin.xiong/lsh_data/lsh.data', 'r') as comment_file:
+with open('/home/lin.xiong/lsh_data/day_902_903.data', 'r') as comment_file:
         for line in comment_file:
             comment_post_id.append(line.strip().split('$&&$')[0])
             comment_raw_data.append(line.strip().split('$&&$')[1])
@@ -22,7 +22,7 @@ tup = zip(comment_post_id,comment_raw_data)
 post_id_raw_data = dict(tup)
 jt = JiebaTokenizer('../lsh_data/stopwords.txt', 'c')
 
-hash_table = store_hash_table('../lsh_data/hash_code_file')
+hash_table = store_hash_table('../lsh_data/day_902_903_hash_code_file')
 print 'build hash_table success ,and hash_table size is : ', len(hash_table)
 
 
@@ -75,8 +75,8 @@ if __name__ == '__main__':
         end_time = int(round(time.time()*1000))
         cost_time = end_time - start_time
         for elem in sim_res:
-            arr.append(post_id_raw_data[elem[0]] + '\t' + str(elem[1]) + os.linesep)
-        print 'const time: ', cost_time
+            arr.append(str(elem[0]) + '\t' + post_id_raw_data[elem[0]] + '\t' + str(elem[1]) + os.linesep)
+        print 'cost time: ', cost_time
     with open('../lsh_data/test_new_tech.data', 'w') as out:
         out.writelines(arr)
     print 'write res into file success..........'
