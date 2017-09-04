@@ -84,18 +84,16 @@ def simhash(doc, fp_len=64):
 
 
 if __name__ == '__main__':
-    # Just for demonstration
-    #doc = sys.stdin.read()
     post_id = []
     simhashcode = []
-    with open('D:/lsh_clear.token','r') as token:
+    with open('../lsh_data//big_lsh_clear.token','r') as token:
         for line in token:
             pid = line.split('\t')[0]
             post_id.append(pid.strip())
             doc = line.split('\t')[1]
-            binary_hash = simhash(doc.strip())
+            binary_hash = simhash(doc. ())
             simhashcode.append(pid + '\t' + str(binary_hash) + os.linesep)
-    with open('D:/hash_code_file','w') as hash_code_file:
+    with open('../lsh_data//big_hash_code_file','w') as hash_code_file:
         hash_code_file.writelines(simhashcode)
         
     
