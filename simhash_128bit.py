@@ -91,7 +91,7 @@ if __name__ == '__main__':
             pid = line.split('\t')[0]
             post_id.append(pid.strip())
             doc = line.split('\t')[1]
-            binary_hash = simhash(doc. ())
+            binary_hash = simhash(doc)
             simhashcode.append(pid + '\t' + str(binary_hash) + os.linesep)
     with open('../lsh_data/big_hash_code_file','w') as hash_code_file:
         hash_code_file.writelines(simhashcode)
