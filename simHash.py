@@ -14,7 +14,7 @@ from simhash_128bit import *
 comment_post_id = []
 comment_raw_data = []
 
-with open('/home/lin.xiong/lsh_data/lsh.data', 'r') as comment_file:
+with open('/home/lin.xiong/lsh_data/big_lsh.data', 'r') as comment_file:
         for line in comment_file:
             comment_post_id.append(line.strip().split('$&&$')[0])
             comment_raw_data.append(line.strip().split('$&&$')[1])
