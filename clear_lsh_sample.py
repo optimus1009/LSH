@@ -22,7 +22,7 @@ if __name__ == '__main__':
 #        print 'Usage: need two arguments doc_1.data doc_1_clear.data'
 #        exit(-1)
 #    input_data,output_data = sys.argv[1:]
-    input_data,output_data = ('/home/lin.xiong/lsh_data/lsh.data','/home/lin.xiong/lsh_data/lsh_clear.data')
+    input_data,output_data = ('/home/lin.xiong/lsh_data/big_lsh.data','/home/lin.xiong/lsh_data/big_lsh_clear.data')
     clear_text = []
     with open(input_data,'r') as f:
         for line in f.readlines():
