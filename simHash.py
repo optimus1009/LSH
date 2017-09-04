@@ -39,7 +39,7 @@ def hammingdist(bit_48_query_string, bit_48_hash_table_arr, k):  # k是相似度
         post_id_dist_dic[post_id] = cnt
     
     dict_sorted = sorted(post_id_dist_dic.items(), key=lambda d:d[1])
-    return [elem for elem in dict_sorted if elem[1] < k]   #返回的数据形态 ：[(post_id,dist),]
+    return [elem for elem in dict_sorted if elem[1] < k]   # 返回的数据形态 ：[(post_id,dist),]
 
 
 def find_sim_doc(query):
