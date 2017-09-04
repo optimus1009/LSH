@@ -53,7 +53,8 @@ def find_sim_doc(query):
             post_id_dist.extend(arr)
         else:
             continue
-    return post_id_dist  #返回的数据形态 [(post_id,dist),......................]且距离都小于15
+    sort_post_id_dist = sorted(post_id_dist,key = lambda x : x[1])
+    return sort_post_id_dist  #返回的数据形态 [(post_id,dist),......................]
 
 
 if __name__ == '__main__':
