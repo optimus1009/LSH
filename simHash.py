@@ -14,7 +14,7 @@ from simhash_128bit import *
 comment_post_id = []
 comment_raw_data = []
 
-with open('/home/lin.xiong/lsh_data/big_lsh.data', 'r') as comment_file:
+with open('/home/lin.xiong/lsh_data/lsh.data', 'r') as comment_file:
         for line in comment_file:
             comment_post_id.append(line.strip().split('$&&$')[0])
             comment_raw_data.append(line.strip().split('$&&$')[1])
@@ -22,7 +22,7 @@ tup = zip(comment_post_id,comment_raw_data)
 post_id_raw_data = dict(tup)
 jt = JiebaTokenizer('../lsh_data/stopwords.txt', 'c')
 
-hash_table = store_hash_table('../lsh_data/big_hash_code_file')
+hash_table = store_hash_table('../lsh_data/hash_code_file')
 print 'build hash_table success ,and hash_table size is : ', len(hash_table)
 
 
@@ -49,7 +49,7 @@ def find_sim_doc(query):
         if bit_16 in hash_table.keys():
             bit_48_query = query_split_dic[bit_16]  # bit_48_auery 是一个数组
             bit_48_hash_table = hash_table[bit_16]  # bit_48_hash_table 是一个数组
-            arr = hammingdist(bit_48_query, bit_48_hash_table, 3)
+            arr = hammingdist(bit_48_query, bit_48_hash_table, 20)
             post_id_dist.extend(arr)
         else:
             continue
