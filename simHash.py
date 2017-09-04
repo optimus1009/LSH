@@ -22,7 +22,7 @@ tup = zip(comment_post_id,comment_raw_data)
 post_id_raw_data = dict(tup)
 jt = JiebaTokenizer('../lsh_data/stopwords.txt', 'c')
 
-hash_table = store_hash_table('../lsh_data/hash_code_file')
+hash_table = store_hash_table('../lsh_data/bing_hash_code_file')
 print 'build hash_table success ,and hash_table size is : ', len(hash_table)
 
 
