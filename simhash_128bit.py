@@ -17,14 +17,13 @@ def md5Hash(token):
 
 def hash_threshold(token_dict, fp_len):
     """
-    Iterate through the token dictionary multiply the hash lists with the weights
-    and apply the binary threshold
+    迭代所有的分词，并且每个hashcode乘上权重
     """
     sum_hash = [0] * fp_len
     for _, token in token_dict.iteritems():
         sum_hash = [ x + token.weight * y for x, y in zip(sum_hash, token.hash_list)]
 
-    # apply binary threshold
+    # 二值化
     for i, ft in enumerate(sum_hash):
         if ft > 0:
             sum_hash[i] = 1
@@ -34,8 +33,7 @@ def hash_threshold(token_dict, fp_len):
 
 def binconv(fp, fp_len):
     """
-    Converts 0 to -1 in the tokens' hashes to facilitate
-    merging of the tokens' hashes later on.
+    转换
     input  : 1001...1
     output : [1,-1,-1, 1, ... , 1]
     """
@@ -48,11 +46,10 @@ def binconv(fp, fp_len):
 
 def calc_weights(terms, fp_len):
     """
-    Calculates the weight of each one of the tokens. In this implementation
-    these weights are equal to the term frequency within the document.
+    统计每一个分词的权重，这里用分词在文档里面的tf作为权重，
     :param tokens: A list of all the tokens (words) within the document
-    :fp_len: The length of the Simhash values
-    return dictionary "my_term": Token([-1,1,-1,1,..,-1], 5)
+    :fp_len: simhash的长度
+    return: Token([-1,1,-1,1,..,-1], 5)
     """
     term_dict = {}
     for term in terms:
@@ -68,13 +65,8 @@ def calc_weights(terms, fp_len):
 def simhash(doc, fp_len=64):
     """
     :param doc: The document we want to generate the Simhash value
-    :fp_len: The number of bits we want our hash to be consisted of.
-                Since we are hashing each token of the document using
-                md5 (which produces a 128 bit hash value) then this
-                variable fp_len should be 128. Feel free to change
-                this value if you use a different hash function for
-                your tokens.
-    :return The Simhash value of a document ex. '0000100001110'
+    :fp_len: simhash的长度，一般为 64，128,这里可以随时更改，但是要保持与md5Hash一致，
+    :return :'0000100001110'
     """
     #tokens = tokenize(doc)
     token_dict = calc_weights(doc, fp_len)
@@ -95,5 +87,3 @@ if __name__ == '__main__':
             simhashcode.append(pid + '\t' + str(binary_hash) + os.linesep)
     with open('../lsh_data/day_902_903_hash_code_file','w') as hash_code_file:
         hash_code_file.writelines(simhashcode)
-        
-    
