@@ -74,7 +74,7 @@ if __name__ == '__main__':
         end_time = int(round(time.time()*1000))
         cost_time = end_time - start_time
         for elem in sim_res:
-            arr.append(code + '\t' + len(sim_res) + '\t' + 'a|b|c' + os.linesep)
+            arr.append(code + '\t' + str(len(sim_res)) + '\t' + 'a|b|c' + os.linesep)
         print 'cost time: ', cost_time
     with open('../lsh_data/out_put_2','w') as out_put_2_file:
         out_put_2_file.writelines(arr)
