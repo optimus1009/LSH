@@ -61,6 +61,14 @@ if __name__ == '__main__':
 
     # 此处需要改造，变成单条数据
     #query_binary_hash   post_id + '\t' + hash_code
+    dic_post_id_code = {}
+    with open('../lsh_data/day_902_903_hash_code_file') as hash_code_file:
+        for line in hash_code_file:
+            post_id = line.strip().split('\t')[0]
+            hash_code_64 = line.strip().split('\t')[1]
+            dic_post_id_code[post_id] = hash_code_64
+
+
     simhash_code = []
     with open('../lsh_data/hash_code_raw_text') as hash_code_raw_text_file:
         for line in hash_code_raw_text_file:
@@ -73,8 +81,13 @@ if __name__ == '__main__':
         sim_res = find_sim_doc(query_binary_hash)  # query_binary_hash: post_id      101010001010101010100010010101010101010100020101001010111100
         end_time = int(round(time.time()*1000))
         cost_time = end_time - start_time
+        ####################
+        hash_arr = []
+        for res in sim_res:
+            hash_arr.append(dic_post_id_code[res[0]])
+        #####################
         for elem in sim_res:
-            arr.append(code + '\t' + str(len(sim_res)) + '\t' + 'a|b|c' + os.linesep)
+            arr.append(code + '\t' + str(len(sim_res)) + '\t' + ','.join(hash_arr) + os.linesep)
         print 'cost time: ', cost_time
     with open('../lsh_data/out_put_2','w') as out_put_2_file:
         out_put_2_file.writelines(arr)
