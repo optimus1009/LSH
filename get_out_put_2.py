@@ -87,7 +87,7 @@ if __name__ == '__main__':
             hash_arr.append(dic_post_id_code[res[0]])
         #####################
         for elem in sim_res:
-            arr.append(code + '\t' + str(len(sim_res)) + '\t' + ','.join(hash_arr) + os.linesep)
+            arr.append(code + '\t' + str(len(set(hash_arr))) + '\t' + ','.join(set(hash_arr)) + os.linesep)
         print 'cost time: ', cost_time
     with open('../lsh_data/out_put_2','w') as out_put_2_file:
         out_put_2_file.writelines(arr)
