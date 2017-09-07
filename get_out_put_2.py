@@ -70,9 +70,12 @@ if __name__ == '__main__':
     print 'len of dic_post_id_code :' ,len(dic_post_id_code)
 
     simhash_code = []
-    with open('../lsh_data/hash_code_raw_text') as hash_code_raw_text_file:
-        for line in hash_code_raw_text_file:
-            simhash_code.append('123' + '\t' + line.strip().split('\t')[0])
+    with open('../lsh_data/doc_2.data','r') as token:
+        for line in token:
+            post_id = line.split('\t')[0]
+            doc = line.split('\t')[1]
+            binary_hash = simhash(doc)
+            simhash_code.append(post_id + '\t' + str(binary_hash))
     print 'len simhash_code: ',len(simhash_code)
     arr = []
     for query_binary_hash in simhash_code:
