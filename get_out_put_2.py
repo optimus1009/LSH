@@ -70,7 +70,7 @@ if __name__ == '__main__':
     print 'len of dic_post_id_code :' ,len(dic_post_id_code)
 
     simhash_code = []
-    with open('../lsh_data/doc_2.data','r') as token:
+    with open('../lsh_data/day_902_903_clear.token','r') as token:
         for line in token:
             post_id = line.split('\t')[0]
             doc = line.split('\t')[1]
