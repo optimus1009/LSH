@@ -67,16 +67,17 @@ if __name__ == '__main__':
             post_id = line.strip().split('\t')[0]
             hash_code_64 = line.strip().split('\t')[1]
             dic_post_id_code[post_id] = hash_code_64
-
+    print 'len of dic_post_id_code :' ,len(dic_post_id_code)
 
     simhash_code = []
     with open('../lsh_data/hash_code_raw_text') as hash_code_raw_text_file:
         for line in hash_code_raw_text_file:
             simhash_code.append('123' + '\t' + line.strip().split('\t')[0])
+    print 'len simhash_code: ',len(simhash_code)
     arr = []
     for query_binary_hash in simhash_code:
         code = query_binary_hash.split('\t')[1]
-        print query_binary_hash
+        #print query_binary_hash
         start_time = int(round(time.time()*1000))
         sim_res = find_sim_doc(query_binary_hash)  # query_binary_hash: post_id      101010001010101010100010010101010101010100020101001010111100
         end_time = int(round(time.time()*1000))
@@ -88,6 +89,7 @@ if __name__ == '__main__':
         #####################
         for elem in sim_res:
             arr.append(code + '\t' + str(len(set(hash_arr))) + '\t' + ','.join(set(hash_arr)) + os.linesep)
-        print 'cost time: ', cost_time
+        #print 'cost time: ', cost_time
+    print 'len arr: ',len(arr)
     with open('../lsh_data/out_put_2','w') as out_put_2_file:
         out_put_2_file.writelines(arr)
