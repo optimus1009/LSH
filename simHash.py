@@ -49,7 +49,7 @@ def find_sim_doc(query):
         if bit_16 in hash_table.keys():
             bit_48_query = query_split_dic[bit_16]  # bit_48_auery 是一个数组
             bit_48_hash_table = hash_table[bit_16]  # bit_48_hash_table 是一个数组
-            arr = hammingdist(bit_48_query, bit_48_hash_table, 3)
+            arr = hammingdist(bit_48_query, bit_48_hash_table, 5)
             post_id_dist.extend(arr)
         else:
             continue
@@ -64,7 +64,7 @@ if __name__ == '__main__':
         for line in token:
             post_id = line.split('\t')[0]
             doc = line.split('\t')[1]
-            binary_hash = simhash(doc.strip())
+            binary_hash = simhash(doc)
             simhash_code.append(post_id + '\t' + str(binary_hash))
     # 此处需要改造，变成单条数据
     arr = []
@@ -74,6 +74,8 @@ if __name__ == '__main__':
         sim_res = find_sim_doc(query_binary_hash)  # query_binary_hash: post_id      101010001010101010100010010101010101010100020101001010111100
         end_time = int(round(time.time()*1000))
         cost_time = end_time - start_time
+        sim_res =set(sim_res)
+        print sim_res
         for elem in sim_res:
             arr.append(str(elem[0]) + '\t' + post_id_raw_data[elem[0]] + '\t' + str(elem[1]) + os.linesep)
         print 'cost time: ', cost_time
