@@ -84,7 +84,7 @@ if __name__ == '__main__':
         code_arr = []
         for elem in sim_res:
             code_arr.append(dic_post_id_code[elem[0]])
-        arr.append(str(elem[0]) + '\t' + str(len(sim_res)) + '\t' + str(elem[1]) + os.linesep)
+        arr.append(str(elem[0]) + '\t' + str(len(sim_res)) + '\t' + ','join(code_arr) + os.linesep)
         print 'cost time: ', cost_time
     with open('../lsh_data/test_new_tech.data', 'w') as out:
         out.writelines(arr)
