@@ -80,6 +80,7 @@ if __name__ == '__main__':
         #print query_binary_hash
         start_time = int(round(time.time()*1000))
         sim_res = find_sim_doc(query_binary_hash)  # query_binary_hash: post_id      101010001010101010100010010101010101010100020101001010111100
+        print sim_res
         end_time = int(round(time.time()*1000))
         cost_time = end_time - start_time
         ####################
