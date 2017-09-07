@@ -46,7 +46,7 @@ def find_sim_doc(query):
         if bit_16 in hash_table.keys():
             bit_48_query = query_split_dic[bit_16]  # bit_48_auery 是一个数组
             bit_48_hash_table = hash_table[bit_16]  # bit_48_hash_table 是一个数组
-            arr = hammingdist(bit_48_query, bit_48_hash_table, 5)
+            arr = hammingdist(bit_48_query, bit_48_hash_table, 3)
             post_id_dist.extend(arr)
         else:
             continue
