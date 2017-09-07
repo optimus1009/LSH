@@ -65,7 +65,7 @@ if __name__ == '__main__':
     print 'len of dic_post_id_code :' ,len(dic_post_id_code)
 
     simhash_code = []
-    with open('../lsh_data/doc_2.data','r') as token:
+    with open('../lsh_data/day_902_903_clear.token','r') as token:
         for line in token:
             post_id = line.split('\t')[0]
             doc = line.split('\t')[1]
@@ -84,9 +84,9 @@ if __name__ == '__main__':
         code_arr = []
         for elem in sim_res:
             code_arr.append(dic_post_id_code[elem[0]])
-        arr.append(str(elem[0]) + '\t' + str(len(sim_res)) + '\t' + ','join(code_arr) + os.linesep)
+        arr.append(str(elem[0]) + '\t' + str(len(sim_res)) + '\t' + ','.join(code_arr) + os.linesep)
         print 'cost time: ', cost_time
-    with open('../lsh_data/test_new_tech.data', 'w') as out:
+    with open('../lsh_data/test_new_tech_v2.data', 'w') as out:
         out.writelines(arr)
     print 'write res into file success..........'
 

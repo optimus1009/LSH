@@ -59,7 +59,6 @@ def find_sim_doc(query):
 
 if __name__ == '__main__':
 
-    # 此处需要改造，变成单条数据
     #query_binary_hash   post_id + '\t' + hash_code
     dic_post_id_code = {}
     with open('../lsh_data/day_902_903_hash_code_file') as hash_code_file:
