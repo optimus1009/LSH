@@ -11,7 +11,7 @@ from simhash_128bit import *
 comment_post_id = []
 comment_raw_data = []
 
-with open('/home/lin.xiong/lsh_data/day_902_903.data', 'r') as comment_file:
+with open('/home/lin.xiong/lsh_data/yeb_post.data', 'r') as comment_file:
         for line in comment_file:
             comment_post_id.append(line.strip().split('$&&$')[0])
             comment_raw_data.append(line.strip().split('$&&$')[1])
@@ -19,7 +19,7 @@ tup = zip(comment_post_id,comment_raw_data)
 post_id_raw_data = dict(tup)
 jt = JiebaTokenizer('../lsh_data/stopwords.txt', 'c')
 
-hash_table = store_hash_table('../lsh_data/day_902_903_hash_code_file')
+hash_table = store_hash_table('../lsh_data/yeb_post_hash_code_file')
 print 'build hash_table success ,and hash_table size is : ', len(hash_table)
 
 
@@ -57,7 +57,7 @@ def find_sim_doc(query):
 if __name__ == '__main__':
 
     dic_post_id_code = {}
-    with open('../lsh_data/day_902_903_hash_code_file') as hash_code_file:
+    with open('../lsh_data/yeb_post_hash_code_file') as hash_code_file:
         for line in hash_code_file:
             post_id = line.strip().split('\t')[0]
             hash_code_64 = line.strip().split('\t')[1]
@@ -65,7 +65,7 @@ if __name__ == '__main__':
     print 'len of dic_post_id_code :' ,len(dic_post_id_code)
 
     simhash_code = []
-    with open('../lsh_data/day_902_903_clear.token','r') as token:
+    with open('../lsh_data/yeb_post_clear.token','r') as token:
         for line in token:
             post_id = line.split('\t')[0]
             doc = line.split('\t')[1]
@@ -73,20 +73,24 @@ if __name__ == '__main__':
             simhash_code.append(post_id + '\t' + str(binary_hash))
     # 此处需要改造，变成单条数据
     arr = []
+    cnt = 0
     for query_binary_hash in simhash_code:
-        print query_binary_hash
+        #print query_binary_hash
+        query_id = query_binary_hash.split('\t')[0]
         start_time = int(round(time.time()*1000))
         sim_res = find_sim_doc(query_binary_hash)  # query_binary_hash: post_id      101010001010101010100010010101010101010100020101001010111100
         end_time = int(round(time.time()*1000))
         cost_time = end_time - start_time
         sim_res =set(sim_res)
-        print sim_res
+        #print sim_res
         code_arr = []
+        if len(sim_res) > 2:
+            cnt += 1
         for elem in sim_res:
             code_arr.append(dic_post_id_code[elem[0]])
-        arr.append(str(elem[0]) + '\t' + str(len(sim_res)) + '\t' + ','.join(code_arr) + os.linesep)
-        print 'cost time: ', cost_time
-    with open('../lsh_data/test_new_tech_v2.data', 'w') as out:
+        arr.append(query_id + '\t' + str(len(sim_res)) + '\t' + ','.join(code_arr) + os.linesep)
+        #print 'cost time: ', cost_time
+    with open('../lsh_data/yeb_post_out.data', 'w') as out:
         out.writelines(arr)
-    print 'write res into file success..........'
+    print 'write res into file success..........',cnt
 
