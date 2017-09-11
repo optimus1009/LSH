@@ -14,7 +14,7 @@ from simhash_128bit import *
 comment_post_id = []
 comment_raw_data = []
 
-with open('/home/lin.xiong/lsh_data/day_902_903.data', 'r') as comment_file:
+with open('/home/lin.xiong/lsh_data/life.data', 'r') as comment_file:
         for line in comment_file:
             comment_post_id.append(line.strip().split('$&&$')[0])
             comment_raw_data.append(line.strip().split('$&&$')[1])
@@ -22,7 +22,7 @@ tup = zip(comment_post_id,comment_raw_data)
 post_id_raw_data = dict(tup)
 jt = JiebaTokenizer('../lsh_data/stopwords.txt', 'c')
 
-hash_table = store_hash_table('../lsh_data/day_902_903_hash_code_file')
+hash_table = store_hash_table('../lsh_data/life_hash_code_file')
 print 'build hash_table success ,and hash_table size is : ', len(hash_table)
 
 
@@ -49,7 +49,7 @@ def find_sim_doc(query):
         if bit_16 in hash_table.keys():
             bit_48_query = query_split_dic[bit_16]  # bit_48_auery 是一个数组
             bit_48_hash_table = hash_table[bit_16]  # bit_48_hash_table 是一个数组
-            arr = hammingdist(bit_48_query, bit_48_hash_table, 3)
+            arr = hammingdist(bit_48_query, bit_48_hash_table, 2)
             post_id_dist.extend(arr)
         else:
             continue
@@ -60,7 +60,7 @@ def find_sim_doc(query):
 if __name__ == '__main__':
 
     simhash_code = []
-    with open('../lsh_data/doc_2.data','r') as token:
+    with open('../lsh_data/life_clear.token','r') as token:
         for line in token:
             post_id = line.split('\t')[0]
             doc = line.split('\t')[1]
@@ -68,18 +68,19 @@ if __name__ == '__main__':
             simhash_code.append(post_id + '\t' + str(binary_hash))
     # 此处需要改造，变成单条数据
     arr = []
+    cnt = 0
     for query_binary_hash in simhash_code:
-        print query_binary_hash
+        #print query_binary_hash
         start_time = int(round(time.time()*1000))
         sim_res = find_sim_doc(query_binary_hash)  # query_binary_hash: post_id      101010001010101010100010010101010101010100020101001010111100
         end_time = int(round(time.time()*1000))
         cost_time = end_time - start_time
         sim_res =set(sim_res)
-        print sim_res
+        if len(sim_res)> 2:
+            cnt +=1
         for elem in sim_res:
             arr.append(str(elem[0]) + '\t' + post_id_raw_data[elem[0]] + '\t' + str(elem[1]) + os.linesep)
-        print 'cost time: ', cost_time
     with open('../lsh_data/test_new_tech.data', 'w') as out:
         out.writelines(arr)
     print 'write res into file success..........'
-
+    print 'total duplic : ',cnt
